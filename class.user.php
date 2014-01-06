@@ -112,7 +112,7 @@ class User {
             case "Add User":
                 $active = ($post_vars["isactive"]?"Y":"N");
                 $admin = ($post_vars["isadmin"]?"Y":"N");
-		//$this->move_image();
+				$this->move_image();
                 $sql = "insert into game_user (user_firstname, user_lastname, user_middle, user_lang, ".
                        "user_email, user_cellular, user_login, user_password, user_pin, user_dob, user_gender, ".
                        "user_active, user_admin, user_role, user_receive_sms) ".
@@ -163,7 +163,7 @@ class User {
                            "user_password = old_password('".$post_vars["user_password"]."'), ".
                            "user_active = '$active', ".
                            "user_admin = '$admin', ".
-			   "user_receive_sms = '$receive_sms' ".
+						   "user_receive_sms = '$receive_sms' ".
                            "where user_id = '".$post_vars["user_id"]."'";
                 }
 		
@@ -176,9 +176,9 @@ class User {
     }
 
     function validate_user() {
-	$allowed_image_format = array('image/png','image/jpg','image/gif','image/jpeg');
+		$allowed_image_format = array('image/png','image/jpg','image/gif','image/jpeg');
 
-
+		print_r($_FILES);
         if (func_num_args()) {
             $arg_list = func_get_args();
             $post_vars = $arg_list[0];
@@ -357,9 +357,19 @@ class User {
         print "<span class='boxtitle'>".LBL_CELLULAR."</span><br> ";
         print "<input type='text' maxlength='20' class='textbox' name='user_cellular' value='".($user["user_cellular"]?$user["user_cellular"]:$post_vars["user_cellular"])."' style='border: 1px solid #000000'><br>";
         print "</td></tr>";
-	print "<tr valign='top'><td>";
+
+		print"</tr><td>Upload Picture&nbsp;&nbsp;";
+		print "<input type='file' name='user_pic' size='6' />";
+		print "</td></tr>";
+
+		print"</tr><td>Upload E-Signature (optional)&nbsp;&nbsp;";
+		print "<input type='file' name='user_esign' size='6' />";
+		print "</td></tr>";
+
+		print "<tr valign='top'><td>";
         print "<input type='checkbox' name='chk_sms_report' ". (($user["user_receive_sms"]=='Y')?'CHECKED':'')."><span class='boxtitle'>Yes, I want to receive SMS on basic statistics (FOR LCE's and MHO's ONLY)!</span></input>";
         print "</td></tr>";
+			
         print "<tr><td><br>";
         if ($get_vars["user_id"]) {
             print "<input type='hidden' name='user_id' value='".$get_vars["user_id"]."'>";
@@ -375,6 +385,8 @@ class User {
             }
         }
         print "</td></tr>";
+
+
         print "</form>";
         print "</table><br>";
     }
@@ -875,7 +887,6 @@ class User {
    }
 
    function move_image(){
-
    }
 }
 ?>
